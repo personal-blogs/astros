@@ -1,5 +1,7 @@
 /** @type {import('astro-i18next').AstroI18nextConfig} */
-export default {
+const config = {
   defaultLocale: "en",
   locales: ["en", "it"],
 };
+
+export default config;
