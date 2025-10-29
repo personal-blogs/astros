@@ -20,7 +20,9 @@ export default defineConfig({
 	integrations: [
 		tailwind(),
 		sitemap(),
-		astroI18next(),
+		astroI18next({
+			locales: ["en", "it"],
+		}),
 		alpinejs(),
 		AstroPWA({
 			mode: "production",

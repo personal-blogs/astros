@@ -6,7 +6,7 @@ backend:
     name: "github"
     repo: zankhq/astros
     branch: main
-    base_url: https://cms.majestico.workers.dev
+    base_url: https://astros-cms-auth.vinay-737.workers.dev
     automatic_deployments: false
 
 media_folder: "public/images"
