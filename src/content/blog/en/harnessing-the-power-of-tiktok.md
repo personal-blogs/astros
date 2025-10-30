@@ -6,6 +6,7 @@ tags:
   - TikTok
   - socialmedia
   - advertising
+  - ''
 image:
   src: /images/tik-tok-ads.png
   alt: TikTok Ads
