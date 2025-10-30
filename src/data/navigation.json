@@ -1,10 +1,9 @@
 {
-  "main_nav_items":  [
+  "main_nav_items": [
     {
       "label": "About Me",
       "page_link": "about-me",
       "children": []
     }
   ]
-  
 }
