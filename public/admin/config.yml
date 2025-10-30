@@ -25,7 +25,7 @@ collections:
           label: "Main Navigation"
           fields:
             - label: "Navigation Links"
-              name: "main_nav_items"
+              name: "mainNavItems"
               widget: "list"
               fields:
                 - {label: "Link Text", name: "label", widget: "string"}

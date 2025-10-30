@@ -1,5 +1,5 @@
 {
-  "main_nav_items": [
+  "mainNavItems": [
     {
       "label": "About Me",
       "page_link": "about-me",
