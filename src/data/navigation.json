@@ -1,32 +1,7 @@
 {
   "main_nav": {
     "items": [
-      {
-        "label": "Home",
-        "page_link": "home" 
-      },
-      {
-        "label": "About Us",
-        "page_link": "about-us", 
-        "children": [ 
-          {
-            "label": "Our Team",
-            "page_link": "our-team" 
-          },
-          {
-            "label": "Careers",
-            "page_link": "careers" 
-          }
-        ]
-      },
-      {
-        "label": "Contact",
-        "page_link": "contact" 
-      },
-      {
-        "label": "Blog",
-        "page_link": "blog" 
-      }
+     
     ]
   }
 }

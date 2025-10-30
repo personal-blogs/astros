@@ -18,39 +18,45 @@ i18n:
     default_locale: "en"
 
 collections:
-    - name: "settings"
-      label: "Site Settings"
-      files:
-        - file: "src/data/navigation.json" # One file for the whole navigation
-          label: "Main Navigation"
-          name: "main_nav"
+- name: "settings"
+  label: "Site Settings"
+  files:
+    - file: "src/data/navigation.json"
+      label: "Main Navigation"
+      name: "main_nav"
+      fields:
+        - label: "Navigation Links"
+          name: "items"
+          widget: "list"
           fields:
-            - label: "Navigation Links"
-              name: "items"
+            - {label: "Link Text", name: "label", widget: "string", required: true}
+            
+            - label: "Target Page (Optional if Sub-menu Exists)"
+              name: "page_link"
+              widget: "relation"
+              collection: "pages"
+              searchFields: ["title", "slug"]
+              valueField: "slug"
+              displayFields: ["title"]
+              filter: {field: "in_navbar", value: true}
+              required: false # Parent link is optional
+              
+            # --- KEY CHANGE: The 'children' list itself is made NOT required ---
+            - label: "Child Links (Sub-menu)"
+              name: "children"
               widget: "list"
-              fields:
-                - {label: "Link Text", name: "label", widget: "string"}
+              required: false # <--- THIS makes the whole sub-menu optional!
+              fields: 
+                - {label: "Link Text", name: "label", widget: "string", required: true}
                 - label: "Target Page"
                   name: "page_link"
                   widget: "relation"
                   collection: "pages"
                   searchFields: ["title", "slug"]
-                  valueField: "slug" # This is the slug we'll use for the URL
+                  valueField: "slug"
                   displayFields: ["title"]
-                  filter: {field: "in_navbar", value: true} # Only show pages where 'in_navbar' is true!
-                - label: "Child Links (Sub-menu)"
-                  name: "children"
-                  widget: "list"
-                  fields: # These fields are repeated for the children
-                    - {label: "Link Text", name: "label", widget: "string"}
-                    - label: "Target Page"
-                      name: "page_link"
-                      widget: "relation"
-                      collection: "pages"
-                      searchFields: ["title", "slug"]
-                      valueField: "slug"
-                      displayFields: ["title"]
-                      filter: {field: "in_navbar", value: true} # Important filter!
+                  filter: {field: "in_navbar", value: true} 
+                  required: true # Child links must have a destination
     - name: "pages"
       label: "Pages"
       folder: "src/content/pages"

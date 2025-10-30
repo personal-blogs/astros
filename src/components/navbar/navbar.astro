@@ -1,5 +1,5 @@
 ---
-// src/components/Navbar.astro - MODIFIED FOR DYNAMIC CONTENT
+// src/components/Navbar.astro - MODIFIED FOR ROBUST LINK/CONTAINER LOGIC
 
 import Button from "@components/ui/button.astro";
 import Link from "@components/ui/link.astro";
@@ -12,153 +12,162 @@ import { t } from "i18next";
 import navData from "../../data/navigation.json"; 
 
 // Assuming the structure is { "main_nav": { "items": [...] } } based on the previous config
-const menuitems = navData.main_nav.items;
+// We use a safe check here in case navData or main_nav is missing
+const menuitems = navData?.main_nav?.items || [];
 
 // --- Helper function to get the correct path ---
 // The page_link field from Sveltia CMS should hold the slug (e.g., "about-us").
 // We need to prepend a '/' to create the full path (e.g., "/about-us").
-const getPath = (slug: string) => `/${slug}`;
+// Note: We avoid using '#' and rely on the main check below to render nothing if page_link is missing.
+const getPath = (slug: string) => `/${slug}`; 
 
 // --- Component Props ---
 // Add any necessary props here, though the data is loaded directly.
 ---
 
 <div
-	x-data="{open: window.innerWidth < 768 ? false : true}"
-	class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 z-10 md:pt-2 relative">
-	<div class="p-4 flex flex-row items-center justify-between">
-		<a
-			href={localizePath("/")}
-			class="flex gap-3 items-center text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
-			<Icon name="logo" width="30" class="dark:invert" alt="Logo" />
-			Astros
-		</a>
-		<button class="md:hidden text-gray-500 w-10 h-10 relative focus:outline-none" @click="open = !open">
-			<span class="sr-only">Open main menu</span>
-			<div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-				<span
-					aria-hidden="true"
-					class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
-					:class="{'rotate-45': open,' -translate-y-1.5': !open }">
-				</span>
-				<span
-					aria-hidden="true"
-					class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
-					:class="{'opacity-0': open } ">
-				</span>
-				<span
-					aria-hidden="true"
-					class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
-					:class="{'-rotate-45': open, ' translate-y-1.5': !open}">
-				</span>
-			</div>
-		</button>
-	</div>
-	<nav
-		:class="{'flex': open, 'hidden': !open}"
-		x-show="open"
-		x-transition:enter="transition ease-out duration-200"
-		x-transition:enter-start="opacity-0 transform scale-90"
-		x-transition:enter-end="opacity-100 transform scale-100"
-		x-transition:leave="transition ease-in duration-200"
-		x-transition:leave-start="opacity-100 transform scale-100"
-		x-transition:leave-end="opacity-0 transform scale-90"
-		class="md:mt-0 lg:pl-8 md:items-center flex-grow pb-4 md:pb-0 flex-col gap-2 transition-all ease-out md:transition-none md:justify-center md:flex-row hidden">
-		<div class="flex flex-col flex-grow text-center gap-2 md:justify-center md:items-center md:flex md:flex-row md:mx-auto">
-			{
-				menuitems.map((item) =>
-					// Check for children (sub-menu)
-					item.children && item.children.length ? (
-						<div x-on:click.away="open = false" class="relative" x-data="{ open: false }">
-							<Button x-on:click="open = !open" style="link" size="sm" class="mt-[2px]">
-								{/* 2. DYNAMIC TITLE: Use item.label from CMS. If i18n is required, you might adjust the CMS content or use t(item.title) if item.title is a key */}
-								{item.label} 
-								<svg
-									fill="currentColor"
-									viewBox="0 0 20 20"
-									x-bind:class="{'rotate-180': open, 'rotate-0': !open}"
-									class="inline w-4 h-4 mb-[2px] transition-transform duration-200 transform">
-									<path
-										fill-rule="evenodd"
-										d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-										clip-rule="evenodd"
-									/>
-								</svg>
-							</Button>
-							<div
-								x-show="open"
-								x-transition:enter="transition ease-out duration-100"
-								x-transition:enter-start="transform opacity-0 scale-95"
-								x-transition:enter-end="transform opacity-100 scale-100"
-								x-transition:leave="transition ease-in duration-75"
-								x-transition:leave-start="transform opacity-100 scale-100"
-								x-transition:leave-end="transform opacity-0 scale-95"
-								class="absolute mt-2 bg-white right-0 w-full origin-top-right rounded-md md:w-48 outline-2 border border-gray-300">
-								<div class="px-2 py-2 rounded-md shadow dark:bg-gray-800">
-									{item.children.map((subitem) => (
-										<Link
-											// 3. DYNAMIC PATH (SUB-ITEM): Use getPath function on subitem.page_link
-											href={localizePath(getPath(subitem.page_link))} 
-											style="hover"
-											size="sm"
-											class="block"
-											x-data="{ isActive: false }"
-											x-init={`() => {
-												const path = $el.getAttribute('data-path');
-												const checkSubPath = () => {
-													isActive = window.location.pathname === path ||
-																window.location.pathname === path + '/' ||
-																window.location.pathname === '/it' + path ||
-																window.location.pathname === '/it' + path + '/';
-												};
-												document.removeEventListener('astro:page-load', checkSubPath);
-												document.addEventListener('astro:page-load', checkSubPath);
-											}`}
-											x-bind:class="{ 'bg-gray-200 dark:bg-gray-600': isActive }"
-											// 4. DATA-PATH (SUB-ITEM): Set data-path attribute to the correct path
-											data-path={getPath(subitem.page_link)}>
-											{/* 5. DYNAMIC TITLE (SUB-ITEM): Use subitem.label */}
-											{subitem.label}
-										</Link>
-									))}
-								</div>
-							</div>
-						</div>
-					) : (
-						<Link
-							// 6. DYNAMIC PATH (MAIN-ITEM): Use getPath function on item.page_link
-							href={localizePath(getPath(item.page_link))}
-							style="hover"
-							size="sm"
-							x-data="{ isActive: false }"
-							x-init={`() => {
-								const path = $el.getAttribute('data-path');
-								const checkPath = () => {
-									isActive = window.location.pathname === path ||
-												window.location.pathname === path + '/' ||
-												window.location.pathname === '/it' + path ||
-												window.location.pathname === '/it' + path + '/';
-								};
-								document.removeEventListener('astro:page-load', checkPath);
-								document.addEventListener('astro:page-load', checkPath);
-							}`}
-							x-bind:class="{ 'bg-gray-200 dark:bg-gray-600': isActive }"
-							// 7. DATA-PATH (MAIN-ITEM): Set data-path attribute to the correct path
-							data-path={getPath(item.page_link)}>
-							{/* 8. DYNAMIC TITLE (MAIN-ITEM): Use item.label */}
-							{item.label}
-						</Link>
-					),
-				)
-			}
-		</div>
-		<div class="mt-4 md:mt-0 flex flex-col md:flex-row gap-4">
-			<Link href="/login" style="outline" class="md:px-3 md:py-2 leading-6">
-				{t("header.secondary_button_text")}
-			</Link>
-			<Link href="https://github.com/zankhq/astros" class="md:px-3 md:py-2 leading-6">
-				{t("header.primary_button_text")}
-			</Link>
-		</div>
-	</nav>
+    x-data="{open: window.innerWidth < 768 ? false : true}"
+    class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 z-10 md:pt-2 relative">
+    <div class="p-4 flex flex-row items-center justify-between">
+        <a
+            href={localizePath("/")}
+            class="flex gap-3 items-center text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">
+            <Icon name="logo" width="30" class="dark:invert" alt="Logo" />
+            Astros
+        </a>
+        <button class="md:hidden text-gray-500 w-10 h-10 relative focus:outline-none" @click="open = !open">
+            <span class="sr-only">Open main menu</span>
+            <div class="block w-5 absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <span
+                    aria-hidden="true"
+                    class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
+                    :class="{'rotate-45': open,' -translate-y-1.5': !open }">
+                </span>
+                <span
+                    aria-hidden="true"
+                    class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
+                    :class="{'opacity-0': open } ">
+                </span>
+                <span
+                    aria-hidden="true"
+                    class="block absolute h-0.5 w-5 bg-current transform transition duration-200 ease-in-out"
+                    :class="{'-rotate-45': open, ' translate-y-1.5': !open}">
+                </span>
+            </div>
+        </button>
+    </div>
+    <nav
+        :class="{'flex': open, 'hidden': !open}"
+        x-show="open"
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0 transform scale-90"
+        x-transition:enter-end="opacity-100 transform scale-100"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 transform scale-100"
+        x-transition:leave-end="opacity-0 transform scale-90"
+        class="md:mt-0 lg:pl-8 md:items-center flex-grow pb-4 md:pb-0 flex-col gap-2 transition-all ease-out md:transition-none md:justify-center md:flex-row hidden">
+        <div class="flex flex-col flex-grow text-center gap-2 md:justify-center md:items-center md:flex md:flex-row md:mx-auto">
+            {
+                menuitems.map((item) => {
+                    // Check 1: If item has children with length > 0, render dropdown
+                    if (item.children && item.children.length) {
+                        return (
+                            <div x-on:click.away="open = false" class="relative" x-data="{ open: false }">
+                                <Button x-on:click="open = !open" style="link" size="sm" class="mt-[2px]">
+                                    {item.label} 
+                                    <svg
+                                        fill="currentColor"
+                                        viewBox="0 0 20 20"
+                                        x-bind:class="{'rotate-180': open, 'rotate-0': !open}"
+                                        class="inline w-4 h-4 mb-[2px] transition-transform duration-200 transform">
+                                        <path
+                                            fill-rule="evenodd"
+                                            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                                            clip-rule="evenodd"
+                                        />
+                                    </svg>
+                                </Button>
+                                <div
+                                    x-show="open"
+                                    x-transition:enter="transition ease-out duration-100"
+                                    x-transition:enter-start="transform opacity-0 scale-95"
+                                    x-transition:enter-end="transform opacity-100 scale-100"
+                                    x-transition:leave="transition ease-in duration-75"
+                                    x-transition:leave-start="transform opacity-100 scale-100"
+                                    x-transition:leave-end="transform opacity-0 scale-95"
+                                    class="absolute mt-2 bg-white right-0 w-full origin-top-right rounded-md md:w-48 outline-2 border border-gray-300">
+                                    <div class="px-2 py-2 rounded-md shadow dark:bg-gray-800">
+                                        {item.children.map((subitem) => (
+                                            <Link
+                                                href={localizePath(getPath(subitem.page_link))} 
+                                                style="hover"
+                                                size="sm"
+                                                class="block"
+                                                x-data="{ isActive: false }"
+                                                x-init={`() => {
+                                                    const path = $el.getAttribute('data-path');
+                                                    const checkSubPath = () => {
+                                                        isActive = window.location.pathname === path ||
+                                                                    window.location.pathname === path + '/' ||
+                                                                    window.location.pathname === '/it' + path ||
+                                                                    window.location.pathname === '/it' + path + '/';
+                                                    };
+                                                    document.removeEventListener('astro:page-load', checkSubPath);
+                                                    document.addEventListener('astro:page-load', checkSubPath);
+                                                }`}
+                                                x-bind:class="{ 'bg-gray-200 dark:bg-gray-600': isActive }"
+                                                data-path={getPath(subitem.page_link)}>
+                                                {subitem.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    } 
+                    
+                    // Check 2: If no children, only render a single link IF item.page_link exists
+                    else if (item.page_link) {
+                        return (
+                            <Link
+                                href={localizePath(getPath(item.page_link))}
+                                style="hover"
+                                size="sm"
+                                x-data="{ isActive: false }"
+                                x-init={`() => {
+                                    const path = $el.getAttribute('data-path');
+                                    const checkPath = () => {
+                                        isActive = window.location.pathname === path ||
+                                                    window.location.pathname === path + '/' ||
+                                                    window.location.pathname === '/it' + path ||
+                                                    window.location.pathname === '/it' + path + '/';
+                                    };
+                                    document.removeEventListener('astro:page-load', checkPath);
+                                    document.addEventListener('astro:page-load', checkPath);
+                                }`}
+                                x-bind:class="{ 'bg-gray-200 dark:bg-gray-600': isActive }"
+                                data-path={getPath(item.page_link)}>
+                                {item.label}
+                            </Link>
+                        );
+                    } 
+                    
+                    // Check 3: If no children AND no link (it's a container left empty), render a non-linked label
+                    else {
+                        return (
+                             <span class="text-gray-500 px-3 py-2 leading-6">{item.label}</span>
+                        );
+                    }
+                })
+            }
+        </div>
+        <div class="mt-4 md:mt-0 flex flex-col md:flex-row gap-4">
+            <Link href="/login" style="outline" class="md:px-3 md:py-2 leading-6">
+                {t("header.secondary_button_text")}
+            </Link>
+            <Link href="https://github.com/zankhq/astros" class="md:px-3 md:py-2 leading-6">
+                {t("header.primary_button_text")}
+            </Link>
+        </div>
+    </nav>
 </div>
