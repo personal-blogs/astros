@@ -1,6 +1,6 @@
 ---
 title: Home
 slug: home
-in_navbar: true
+in_navbar: false
 ---
 Home page test
