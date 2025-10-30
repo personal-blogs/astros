@@ -24,40 +24,35 @@ collections:
         - file: "src/data/navigation.json" # One file for the whole navigation
           label: "Main Navigation"
           fields:
-            - label: "Main Navigation Structure" # This is the outer object
-              name: "main_nav" # <--- THIS IS THE KEY Astro looks for (navData.main_nav)
-              widget: "object"
+            - label: "Navigation Links"
+              name: "main_nav_items"
+              widget: "list"
               fields:
-                - label: "Navigation Links"
-                  name: "items" # <--- THIS IS THE KEY your links are in (navData.main_nav.items)
+                - {label: "Link Text", name: "label", widget: "string"}
+                - label: "Target Page"
+                  name: "page_link"
+                  widget: "relation"
+                  collection: "pages"
+                  searchFields: ["title", "slug"]
+                  valueField: "slug" # This is the slug we'll use for the URL
+                  displayFields: ["title"]
+                  required: false
+                  filter: {field: "in_navbar", value: true} # Only show pages where 'in_navbar' is true!
+                - label: "Child Links (Sub-menu)"
+                  name: "children"
                   widget: "list"
                   required: false
-                  fields:
+                  fields: # These fields are repeated for the children
                     - {label: "Link Text", name: "label", widget: "string"}
                     - label: "Target Page"
                       name: "page_link"
                       widget: "relation"
                       collection: "pages"
                       searchFields: ["title", "slug"]
-                      valueField: "slug" # This is the slug we'll use for the URL
+                      valueField: "slug"
                       displayFields: ["title"]
-                      required: false
-                      filter: {field: "in_navbar", value: true} # Only show pages where 'in_navbar' is true!
-                    - label: "Child Links (Sub-menu)"
-                      name: "children"
-                      widget: "list"
-                      required: false
-                      fields: # These fields are repeated for the children
-                        - {label: "Link Text", name: "label", widget: "string"}
-                        - label: "Target Page"
-                          name: "page_link"
-                          widget: "relation"
-                          collection: "pages"
-                          searchFields: ["title", "slug"]
-                          valueField: "slug"
-                          displayFields: ["title"]
-                          required: true
-                          filter: {field: "in_navbar", value: true} # Important filter!
+                      required: true
+                      filter: {field: "in_navbar", value: true} # Important filter!
     - name: "pages"
       label: "Pages"
       folder: "src/content/pages"
