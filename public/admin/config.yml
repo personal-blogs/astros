@@ -24,6 +24,7 @@ collections:
         - file: "src/data/navigation.json" # One file for the whole navigation
           label: "Main Navigation"
           name: "main_nav"
+          widget: "object"
           fields:
             - label: "Navigation Links"
               name: "items"
