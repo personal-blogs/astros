@@ -4,9 +4,9 @@ logo_url: /logo.svg
 
 backend:
     name: "github"
-    repo: zankhq/astros
+    repo: personal-blogs/astros
     branch: main
-    base_url: https://astros-cms-auth.vinay-737.workers.dev
+    base_url: https://github-auth.vinayp.com
     automatic_deployments: false
 
 media_folder: "public/images"

@@ -9,18 +9,17 @@ tags:
 image:
   src: /images/tik-tok-ads.png
   alt: TikTok Ads
-snippet: In the world of social media marketing, a new player is making a
-  significant impact TikTok. This guide explores the potential of TikTok ads and
-  how to harness them effectively
+snippet: In the world of social media marketing, a new player is making a significant impact TikTok. This guide explores the potential of TikTok ads and how to harness them effectively
 publishDate: 2023-06-29 11:39
 category: Marketing
 ---
-
+![](/images/logo.svg)
 
 In the world of social media marketing, platforms like Facebook and Instagram have long been the go-to destinations for advertisers. However, there's a new player that's making a significant impact: TikTok. This platform has rapidly gained popularity among younger audiences and is proving to be a potent advertising tool.
 
-
 ## Why TikTok?
+
+![](/images/tik-tok-ads.png)
 
 First launched in 2016, TikTok has since amassed over 1 billion active monthly users globally. Its meteoric rise can be attributed to its unique content format – short, engaging videos that offer a blend of creativity and entertainment. For brands seeking to reach younger demographics, TikTok is an unmissable opportunity.
 
@@ -45,7 +44,6 @@ Hashtag Challenges are a unique ad format offered by TikTok, capitalizing on the
 ### 4. Branded Effects
 
 Branded Effects allow brands to create interactive elements, such as stickers or filters, for TikTokers to use in their videos. This format can help brands become a more organic part of the TikTok experience.
-
 
 ## The Power of User-Generated Content
 

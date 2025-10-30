@@ -9,13 +9,10 @@ tags:
 image:
   src: /images/tik-tok-ads.png
   alt: Annunci su TikTok
-snippet: Nel mondo del marketing sui social media, un nuovo player sta avendo un
-  impatto significativo TikTok. Questa guida esplora il potenziale degli annunci
-  su TikTok e come sfruttarli efficacemente
+snippet: Nel mondo del marketing sui social media, un nuovo player sta avendo un impatto significativo TikTok. Questa guida esplora il potenziale degli annunci su TikTok e come sfruttarli efficacemente
 publishDate: 2023-06-29 11:39
 category: Marketing
 ---
-
 Nel mondo del marketing sui social media, piattaforme come Facebook e Instagram sono da tempo le destinazioni preferite dagli inserzionisti. Tuttavia, c'è un nuovo player che sta avendo un impatto significativo: TikTok. Questa piattaforma ha rapidamente guadagnato popolarità tra il pubblico più giovane ed è un potente strumento pubblicitario.
 
 
