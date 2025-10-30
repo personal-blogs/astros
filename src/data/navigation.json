@@ -1,12 +1,11 @@
 {
+  "main_nav": {
   "items": [
     {
       "label": "About Me",
       "page_link": "about-me",
       "children": []
     }
-  ],
-  "main_nav": {
-    "items": []
+  ]
   }
 }
