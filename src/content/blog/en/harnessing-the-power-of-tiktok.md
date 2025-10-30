@@ -13,6 +13,8 @@ snippet: In the world of social media marketing, a new player is making a signif
 publishDate: 2023-06-29 11:39
 category: Marketing
 ---
+![](/images/logo.svg)
+
 In the world of social media marketing, platforms like Facebook and Instagram have long been the go-to destinations for advertisers. However, there's a new player that's making a significant impact: TikTok. This platform has rapidly gained popularity among younger audiences and is proving to be a potent advertising tool.
 
 ## Why TikTok?
