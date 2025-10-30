@@ -1,0 +1,35 @@
+---
+// Get the content collection helper
+import { getCollection } from 'astro:content';
+
+// 1. Generate the static paths for every page
+export async function getStaticPaths() {
+  const allPages = await getCollection('pages');
+
+  return allPages.map(entry => ({
+    params: { slug: entry.data.slug }, // Use the 'slug' from the frontmatter defined in CMS
+    props: { entry },
+  }));
+}
+
+// 2. Receive the current page entry as a prop
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+
+// Data fields:
+const title = entry.data.title;
+// The 'body' content is rendered by the <Content /> component
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{title}</title>
+</head>
+<body>
+    <h1>{title}</h1>
+    <article>
+        <Content /> {/* This renders the Markdown 'body' content */}
+    </article>
+</body>
+</html>
