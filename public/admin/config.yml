@@ -38,8 +38,8 @@ collections:
                     name: "page_link"
                     widget: "relation"
                     collection: "pages"
-                    searchFields: ["title", "slug"]
-                    valueField: "slug" # This is the slug we'll use for the URL
+                    searchFields: ["title", "permalink"]
+                    valueField: "permalink" # This is the slug we'll use for the URL
                     displayFields: ["title"]
                     required: false
                     filter: {field: "in_navbar", value: true} # Only show pages where 'in_navbar' is true!
@@ -53,8 +53,8 @@ collections:
                         name: "page_link"
                         widget: "relation"
                         collection: "pages"
-                        searchFields: ["title", "slug"]
-                        valueField: "slug"
+                        searchFields: ["title", "permalink"]
+                        valueField: "permalink"
                         displayFields: ["title"]
                         required: true
                         filter: {field: "in_navbar", value: true} # Important filter!
@@ -64,7 +64,7 @@ collections:
       create: true
       fields:
         - {label: "Title", name: "title", widget: "string"}
-        - {label: "Slug", name: "slug", widget: "string"}
+        - {label: "Slug", name: "permalink", widget: "string"}
         - {label: "Show in Navigation Menu", name: "in_navbar", widget: "boolean", default: true}
         - {label: "Body", name: "body", widget: "markdown"}
     - name: "posts"

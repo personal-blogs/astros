@@ -1,6 +1,6 @@
 ---
 title: Home
-slug: home
+permalink: home
 in_navbar: false
 ---
 Home page test
