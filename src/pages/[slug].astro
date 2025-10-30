@@ -1,12 +1,14 @@
 ---
 // Get the content collection helper
-import { getCollection } from 'astro:content';
+import Container from "@components/container.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
 // 1. Generate the static paths for every page
 export async function getStaticPaths() {
-  const allPages = await getCollection('pages');
+  const allPages = await getCollection("pages");
 
-  return allPages.map(entry => ({
+  return allPages.map((entry) => ({
     params: { slug: entry.data.permalink }, // Use the 'slug' from the frontmatter defined in CMS
     props: { entry },
   }));
@@ -18,18 +20,22 @@ const { Content } = await entry.render();
 
 // Data fields:
 const title = entry.data.title;
+const { lang } = Astro.props;
+
 // The 'body' content is rendered by the <Content /> component
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>{title}</title>
-</head>
-<body>
-    <h1>{title}</h1>
-    <article>
-        <Content /> {/* This renders the Markdown 'body' content */}
-    </article>
-</body>
-</html>
+<Layout title={title} lang={lang}>
+  <Container>
+    <h1
+      class="text-4xl mb-3 lg:text-5xl font-bold lg:tracking-tight mt-1 lg:leading-tight dark:text-white"
+    >
+      {title}
+    </h1>
+    <div
+      class="mx-auto prose prose-lg dark:prose-invert mt-6 dark:text-gray-200"
+    >
+      <Content />
+    </div>
+  </Container>
+</Layout>
