@@ -6,7 +6,7 @@ backend:
     name: "github"
     repo: zankhq/astros
     branch: main
-    base_url: https://git-auth.vinayp.com
+    base_url: https://github-auth.vinayp.com
     automatic_deployments: false
 
 media_folder: "public/images"
