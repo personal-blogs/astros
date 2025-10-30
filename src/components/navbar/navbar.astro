@@ -13,7 +13,7 @@ import navData from "../../data/navigation.json";
 
 // Assuming the structure is { "main_nav": { "items": [...] } } based on the previous config
 // We use a safe check here in case navData or main_nav is missing
-const menuitems = navData?.mainNavItems || [];
+const menuitems = navData?.main_nav?.items || [];
 
 // --- Helper function to get the correct path ---
 // The page_link field from Sveltia CMS should hold the slug (e.g., "about-us").
