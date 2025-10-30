@@ -4,9 +4,9 @@ logo_url: /logo.svg
 
 backend:
     name: "github"
-    repo: personal-blogs/astros
+    repo: zankhq/astros
     branch: main
-    base_url: https://github-auth.vinayp.com
+    base_url: https://astros-cms-auth.vinay-737.workers.dev
     automatic_deployments: false
 
 media_folder: "public/images"
@@ -37,12 +37,11 @@ collections:
                   searchFields: ["title", "slug"]
                   valueField: "slug" # This is the slug we'll use for the URL
                   displayFields: ["title"]
-                  required: false
                   filter: {field: "in_navbar", value: true} # Only show pages where 'in_navbar' is true!
                 - label: "Child Links (Sub-menu)"
                   name: "children"
                   widget: "list"
-                  required: false
+                  
                   fields: # These fields are repeated for the children
                     - {label: "Link Text", name: "label", widget: "string"}
                     - label: "Target Page"
@@ -52,7 +51,6 @@ collections:
                       searchFields: ["title", "slug"]
                       valueField: "slug"
                       displayFields: ["title"]
-                      required: true
                       filter: {field: "in_navbar", value: true} # Important filter!
     - name: "pages"
       label: "Pages"
